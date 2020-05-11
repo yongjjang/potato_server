@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  flask_nginx_uwsgi:
+
+    build: .
+    depends_on:
+      - db
+    ports:
+      - "80:80"
+  db:
+    image: mariadb
+    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+
+    volumes:
+      - ./data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=EA
+      - TZ="Asia/Seoul"
+    ports:
+      - "9876:3306"
+
+
