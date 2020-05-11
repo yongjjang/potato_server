@@ -6,4 +6,3 @@ env:
   - FLASK=1.1.2
 install:
   - pip install -q Flask==$FLASK
-script: python3 ./app/main.py
