@@ -3,8 +3,7 @@ dist: xenial
 python:
   - "3.7"
 env:
-  - FLASK=1.0.2
-  - FLASK=0.10.1
+  - FLASK=1.1.2
 install:
   - pip install -q Flask==$FLASK
   - pip install -q -r dev_requirements.txt
