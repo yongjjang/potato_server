@@ -7,6 +7,7 @@ Embedded Software Project Server, Employee management platform
 - Nginx	
 - uWsgi	
 - Flask	
+- Travis
 
 ## Usage	
 #### Step 1. Cording Hard	
