@@ -1,67 +1,91 @@
-from sqlalchemy import Column, String, Integer, DateTime, Float
-from sqlalchemy import func
-from app.database import base
+from sqlalchemy import Column, Integer, String, Date, Boolean
+from book_rental_service.application.database import base, db_session
 
 
-class BranchOffice(base):
-    __tablename__ = 'branch_office'
+class Book(base):
+    __tablename__ = 'book'
+    __table_args__ = {'extend_existing': True}
+
+    id = Column(Integer, primary_key=True)
+    isbn = Column(String(40))
+    name = Column(String(40))
+    author = Column(String(40))
+    price = Column(String(10))
+    description = Column(String(40))
+    link = Column(String(100))
+    picturepath = Column(String(60))
+    isrentedout = Column(Boolean(), default=True)
+    column_list = ['ID', 'ISBN', 'Name', 'Author', 'Price', 'Description', 'link', 'Picture', 'Is Rent Out?']
+
+    def __init__(self, id, isbn, name, author, price, description, link, picture_path, isrentedout):
+        self.id = id
+        self.isbn = isbn
+        self.name = name
+        self.author = author
+        self.price = price
+        self.description = description
+        self.link = link
+        self.picturepath = picture_path
+        self.isrentedout = isrentedout
+
+    def __repr__(self):
+        return "%d|%s|%s|%s|%s|%s|%s|%s|%s" % \
+               (self.id, self.isbn, self.name, self.author, self.price
+                , self.description, self.link, self.picturepath, self.isrentedout)
+
+
+
+class User(base):
+    __tablename__ = 'user'
+    __table_args__ = {'extend_existing': True}
+
     id = Column(Integer, primary_key=True)
     name = Column(String(40))
-    telno = Column(String(11))
-    address = Column(String(60))
-    latitude = Column(Float(20))
-    longitude = Column(Float(20))
+    birthday = Column(Date)
+    gender = Column(String(2))
+    email = Column(String(20))
+    telno = Column(String(14))
+    picturepath = Column(String(100))
+    canrent = Column(Boolean(), default=True)
+    column_list = ['ID', 'Name', 'Birthday', 'Gender', 'E-Mail', 'Tel', 'Picture', 'CanRent']
 
-
-    def __init__(self, id, name, telno, address, latitude, longitude):
+    def __init__(self, id, name, birthday, gender, email, telno, picturepath, canrent):
         self.id = id
         self.name = name
+        self.birthday = birthday
+        self.gender = gender
+        self.email = email
         self.telno = telno
-        self.address = address
-        self.latitude = latitude
-        self.longitude = longitude
+        self.picturepath = picturepath
+        self.canrent = canrent
 
-    def __repr__(self):
-        return "<BranchOffice : ('%d', '%s', '%s', '%s', '%f', '%f'>" % \
-               (self.id, self.name, self.telno, self.address, self.latitude, self.longitude)
+    def __str__(self):
+        return "%d|%s|%s|%s|%s|%s|%s|%s" % \
+               (self.id, self.name, self.birthday, self.gender, self.email
+                , self.telno, self.picturepath, self.canrent)
 
-class Employee(base):
-    __tablename__ = 'employee'
+
+class BookRental(base):
+    __tablename__ = 'bookrental'
+    __table_args__ = {'extend_existing': True}
+
     id = Column(Integer, primary_key=True)
-    name = Column(String(40))
-    telno = Column(String(11))
-    address = Column(String(60))
-    walking_point = Column(Integer(11))
+    userid = Column(Integer)
+    isbn = Column(String(40))
+    rentaldate = Column(Date)
+    returndate = Column(Date)
+    isrentout = Column(Boolean(), default=False)
+    column_list = ['ID', 'User ID', 'ISBN', 'Rental Date', 'Return Date', 'Is Rent Out?']
 
-
-    def __init__(self, id, name, telno, address, walking_point):
+    def __init__(self, id, userid, isbn, rentaldate, returndate, isrentout):
         self.id = id
-        self.name = name
-        self.telno = telno
-        self.address = address
-        self.walking_point = walking_point
+        self.userid = userid
+        self.isbn = isbn
+        self.rentaldate = rentaldate
+        self.returndate = returndate
+        self.isrentout = isrentout
 
-    def __repr__(self):
-        return "<BranchOffice : ('%d', '%s', '%s', '%s', '%d'>" % \
-               (self.id, self.name, self.telno, self.address, self.walking_point)
-
-
-class CommuteLog(base):
-    __tablename__ = 'commute_log'
-    today = Column(DateTime, default=func.date())
-    office_id = Column(String(40))
-    emp_id = Column(String(11))
-    work_in_time = Column(String(60))
-    work_out_time =  Column(Integer(11))
-
-
-    def __init__(self, today, emp_id, work_in_time, work_out_time):
-        self.today = today
-        self.emp_id = emp_id
-        self.address = address
-        self.work_in_time = work_in_time
-        self.work_out_time = work_out_time
-
-    def __repr__(self):
-        return "<BranchOffice : ('%s', '%d', '%d', '%s', '%d'>" % \
-               (self.today, self.office_id , self.emp_id, self.work_in_time, self.work_out_time)
+    def __str__(self):
+        return "%d|%d|%s|%s|%s|%s" % \
+               (self.id, self.userid, self.isbn, self.rentaldate
+                , self.returndate, self.isrentout)
