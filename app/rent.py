@@ -1,5 +1,5 @@
-from .process_data import *
-from .models import *
+from process_data import *
+from models import *
 from flask import Blueprint, flash, g, redirect, render_template, request, session, url_for
 
 rent = Blueprint('rent', __name__, url_prefix='/rent', template_folder='templates/rent/', static_folder='static')

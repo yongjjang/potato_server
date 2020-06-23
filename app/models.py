@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String, Date, Boolean
-from book_rental_service.application.database import base, db_session
+from database import base, db_session
 
 
 class Book(base):

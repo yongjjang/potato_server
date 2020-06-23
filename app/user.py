@@ -1,6 +1,6 @@
 import functools
-from .process_data import *
-from .models import *
+from process_data import *
+from models import *
 from flask import Blueprint, flash, g, redirect, render_template, request, session, url_for, jsonify
 
 user = Blueprint('user', __name__, url_prefix='/user', template_folder='templates/user', static_folder='static')

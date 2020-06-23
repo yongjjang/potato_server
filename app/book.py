@@ -1,5 +1,5 @@
-from .process_data import *
-from .models import *
+from process_data import *
+from models import *
 from flask import Blueprint, flash, g, redirect, render_template, request, session, url_for, jsonify
 
 book = Blueprint('book', __name__, url_prefix='/book', template_folder='templates/book/', static_folder='static')
